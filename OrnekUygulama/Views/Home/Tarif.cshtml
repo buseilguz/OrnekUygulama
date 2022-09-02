@@ -1,0 +1,71 @@
+﻿@model OrnekUygulama.Models.TarifYorumlar
+
+@{
+    ViewData["Title"] = "Tarif";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>@Model.tarif.Yemekadi</h4>
+<h5>Kategoriler : @Model.tarif.Kategori.Kategoriadi</h5>
+<div>
+    @Model.tarif.Tarif
+
+
+
+    @if (Model.yorumlar.Count > 0)
+    {
+        <h5><b>Yorumlar:</b> </h5>
+    }
+    @foreach (var item in Model.yorumlar)
+    {
+        @Html.Raw(item.Yorum)<br />
+
+        <small>@item.Uye.Adi @item.Uye.Soyadi tarafından @item.Eklemetarihi tarihinde eklendi.</small><br />
+
+
+    }
+</div>
+@using System.Security.Claims
+@{
+    @try
+    {
+
+
+
+
+<form asp-action="YorumYap" asp-controller="Home" method="post">
+
+    @{
+        string kulID = User.FindFirstValue(@ClaimTypes.NameIdentifier).ToString();
+    }
+        <input id="TarifId" asp-for="@Model.tarif.TarifId" name ="TarifId" type="hidden"  value="@Model.tarif.TarifId" />
+
+
+
+    
+
+             <textarea id="Yorum" name="Yorum">
+
+             </textarea>
+         <input id="btnYorumGonder" type="submit" value="Yorum Gönder" />
+</form>
+        @if (TempData["mesaj"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["mesaj"];
+            </div>
+        }
+
+    }
+    catch
+    {
+
+    } }
+
+
+
+
+
+
+
+<a asp-action="TumTarifler" class="btn btn-success">Geri</a>

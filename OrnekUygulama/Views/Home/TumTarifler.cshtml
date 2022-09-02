@@ -1,0 +1,36 @@
+﻿@model IEnumerable<OrnekUygulama.Models.Yemektarifleri>
+
+@{
+    ViewData["Title"] = "Tarif";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Tüm Tarifler</h3>
+
+
+
+<ul>
+
+    @foreach (var item in Model)
+    {
+        <li>
+            <a asp-action="Tarif" asp-route-id="@item.TarifId">
+                @Html.DisplayFor(modelItem => item.Sira)
+                @Html.DisplayFor(modelItem => item.Yemekadi)
+
+
+                @Html.DisplayFor(modelItem => item.Tarif)
+                Kategorisi:  @Html.DisplayFor(modelItem => item.Kategori.Kategoriadi)
+
+
+                
+            </a> |
+
+
+        </li>
+    }
+
+
+
+    
+</ul>
